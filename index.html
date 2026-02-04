@@ -1,0 +1,122 @@
+><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Metros Cuadrados</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .result-area {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .total-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .total-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-card">
+    <h2>Calculadora de Material</h2>
+    
+    <div class="input-group">
+        <label>Metros cuadrados a cubrir (m²)</label>
+        <input type="number" id="metrosTotales" placeholder="Ej: 20" oninput="calcular()">
+    </div>
+
+    <div class="input-group">
+        <label>Metros por caja (m²)</label>
+        <input type="number" id="metrosCaja" placeholder="Ej: 1.5" oninput="calcular()">
+    </div>
+
+    <div class="input-group">
+        <label>Costo por caja ($)</label>
+        <input type="number" id="costoCaja" placeholder="Ej: 300" oninput="calcular()">
+    </div>
+
+    <div class="result-area">
+        <div class="result-item">
+            <span>Cajas necesarias:</span>
+            <span id="resCajas">0</span>
+        </div>
+        <div class="result-item">
+            <span class="total-label">Costo Total:</span>
+            <span class="total-price" id="resTotal">$0.00</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calcular() {
+        const mt = parseFloat(document.getElementById('metrosTotales').value) || 0;
+        const mc = parseFloat(document.getElementById('metrosCaja').value) || 0;
+        const cc = parseFloat(document.getElementById('costoCaja').value) || 0;
+
+        if (mt > 0 && mc > 0) {
+            // Calculamos cajas redondeando hacia arriba porque no venden media caja
+            const cajasNecesarias = Math.ceil(mt / mc);
+            const costoTotal = cajasNecesarias * cc;
+
+            document.getElementById('resCajas').innerText = cajasNecesarias;
+            document.getElementById('resTotal').innerText = '$' + costoTotal.toLocaleString('en-US', {minimumFractionDigits: 2});
+        } else {
+            document.getElementById('resCajas').innerText = '0';
+            document.getElementById('resTotal').innerText = '$0.00';
+        }
+    }
+</script>
+
+</body>
+</html>
+
